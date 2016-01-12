@@ -2,13 +2,21 @@
 
 > "Wraps a web application as a hybrid app with [Apache Cordova CLI](http://cordova.io) or [Crome Cordova Apps CLI](https://github.com/MobileChromeApps/mobile-chrome-apps)"
 
-More information about [Apache Cordova Command-line Interface](http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-line%20Interface)
-More information about [Chrome Apps for Mobile](https://github.com/MobileChromeApps/mobile-chrome-apps)
+- More information about [Apache Cordova Command-line Interface](http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-line%20Interface)
+- More information about [Chrome Apps for Mobile](https://github.com/MobileChromeApps/mobile-chrome-apps)
 
-## Getting Started
-This plugin requires Grunt `^0.4.5`
-NPM module `cordova-cli` or `cca` needs to be install locally or globally
+## First Install Cordova or CCA
+- This plugin requires Grunt `^0.4.5`
+- NPM module `cordova-cli` version >=3.0.0 or `cca` >=0.5.1 needs to be install locally or at peer location as node module grunt-cordovacli, or in a node_module directory of the parent directory structure
+```shell
+npm install cordova@latest --save
+```
+or
+```shell
+npm install cca@latest --save
+```
 
+## Gettings Started with Grunt and the Cordova/CCA Grunt Plugin
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
@@ -34,7 +42,7 @@ In your project's Gruntfile, add a section named `cordovacli` to the data object
 cordovacli: {
     options: {
         path: 'myHybridAppFolder'
-        cli: 'cca'
+        cli: 'cca'  // cca or cordova
     },
     cordova: {
         options: {
@@ -85,6 +93,15 @@ cordovacli: {
             ]
         }
     },
+    remove_plugin: {
+        options: {
+            command: 'plugin',
+            action: 'rm',
+            plugins: [
+                'battery-status'
+            ]
+        }
+    },
     build_ios: {
         options: {
             command: 'build',
@@ -102,6 +119,16 @@ cordovacli: {
             command: 'emulate',
             platforms: ['android'],
             args: ['--target','Nexus5']
+        }
+    },
+    add_facebook_plugin: {
+        options: {
+            command: 'plugin',
+            action: 'add',  
+            plugins: [                 
+                'com.phonegap.plugins.facebookconnect'
+            ],
+            args:['--variable','APP_ID=fb12132424','--variable','APP_NAME=myappname']
         }
     }
 }
@@ -197,10 +224,10 @@ It can be specify in 4 forms:
 * Git Url          (i.e. https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git)
 * Directory Path   (~/userid/cordova/plugins/plugin1)
 
-If using with option.action=add and using ID or ID@version, and plugin is already present, then the add action it's skip
+If using with option.action=add and using ID or ID@version, and plugin is already present, cordova will skip it
+If using remove or rm options.command to remove a plugin only Shortcut  or ID are supported
 
 ## Contributing
 Biggest contribution you can do is to open issues.
 You will need to have signed off on the [Apache CLA](http://www.apache.org/licenses/icla.txt) in order for changes to be accepted. For more information, refer to: http://www.apache.org/licenses/#clas
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
